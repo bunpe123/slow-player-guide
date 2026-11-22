@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>スロー再生（試験版）</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --background: #f4f6f4;
+      --surface: #fff;
+      --text: #202a27;
+      --muted: #4e6059;
+      --line: #ccd7d1;
+      --accent: #165b48;
+      --button: #165b48;
+      --button-hover: #104838;
+      --button-text: #fff;
+      --inset: #eaf1ed;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #141b18;
+        --surface: #1d2723;
+        --text: #eef4f0;
+        --muted: #bdcec5;
+        --line: #4b6156;
+        --accent: #a2e4c9;
+        --button: #a2e4c9;
+        --button-hover: #bdf2dd;
+        --button-text: #14251d;
+        --inset: #283730;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font: 1rem/1.75 system-ui, sans-serif;
+      overflow-wrap: anywhere;
+    }
+
+    main {
+      max-inline-size: 48rem;
+      margin-inline: auto;
+      padding: clamp(1rem, 4vw, 2rem);
+    }
+
+    header { padding-block: 1rem 1.5rem; }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.4;
+      text-wrap: balance;
+    }
+
+    h1 { font-size: clamp(1.75rem, 5.5vw, 2.6rem); }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.05rem; }
+
+    p, ul, ol { margin-block: 0.75rem 0; }
+    ul, ol { padding-inline-start: 1.5em; }
+    li + li { margin-block-start: 0.55rem; }
+    ol > li::marker { color: var(--accent); font-weight: 700; }
+
+    a { color: var(--accent); text-underline-offset: 0.2em; }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .download {
+      display: inline-block;
+      max-inline-size: 100%;
+      margin-block-start: 0.85rem;
+      padding: 0.7rem 1.15rem;
+      border-radius: 0.65rem;
+      background: var(--button);
+      color: var(--button-text);
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .download:hover { background: var(--button-hover); }
+
+    nav, section {
+      border: 1px solid var(--line);
+      border-radius: 0.9rem;
+      background: var(--surface);
+      padding: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    nav ul {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      padding: 0;
+      list-style: none;
+    }
+
+    @media (min-width: 39rem) {
+      nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    nav li + li { margin: 0; }
+    nav a { display: block; padding-block: 0.5rem; }
+
+    section {
+      margin-block-start: 1rem;
+      scroll-margin-block-start: 1rem;
+    }
+
+    section:target > h2 { color: var(--accent); }
+
+    figure {
+      max-inline-size: 280px;
+      margin: 1rem auto;
+    }
+
+    .figure-frame {
+      position: relative;
+      aspect-ratio: 1080 / 2424;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 0.75rem;
+      background: var(--inset);
+    }
+
+    .figure-frame img {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: contain;
+    }
+
+    figcaption {
+      margin-block-start: 0.4rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+      text-align: center;
+    }
+
+    #use h3 { margin-block-start: 1.25rem; }
+
+    table {
+      inline-size: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    table col:first-child { width: 44%; }
+
+    th, td {
+      border-block-end: 1px solid var(--line);
+      padding: 0.55rem;
+      text-align: start;
+      vertical-align: top;
+    }
+
+    thead { background: var(--inset); }
+    tbody th { font-weight: 600; }
+
+    .note {
+      padding: 0.75rem 0.9rem;
+      border-inline-start: 3px solid var(--accent);
+      border-radius: 0.35rem;
+      background: var(--inset);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>スロー再生（試験版）の入れ方と使い方</h1>
+      <a class="download" href="https://github.com/bunpe123/slow-player-guide/releases/latest/download/slow-player.apk">アプリをダウンロード</a>
+    </header>
+
+    <nav aria-labelledby="contents-title">
+      <h2 id="contents-title">目次</h2>
+      <ul>
+        <li><a href="#intro">はじめに</a></li>
+        <li><a href="#install">1. 入れる</a></li>
+        <li><a href="#use">2. 使い方</a></li>
+        <li><a href="#try">3. 試してほしいこと</a></li>
+        <li><a href="#feedback">4. 教えてほしいこと</a></li>
+        <li><a href="#logs">5. 困ったことが起きたら（ログを送る）</a></li>
+        <li><a href="#storage">6. 容量について</a></li>
+        <li><a href="#expiry">7. 期限と更新</a></li>
+        <li><a href="#uninstall">8. 消すとき</a></li>
+      </ul>
+    </nav>
+
+    <section id="intro">
+      <h2>はじめに</h2>
+      <ul>
+        <li>音ゲーなどのプレー動画を、1 コマずつ・ゆっくり見返すための Android アプリです。今は試験版です。</li>
+        <li>Android 7.0 以降のスマホで使えます。iPhone 版はまだありません。</li>
+        <li>試験版は<strong>入れたビルドから 30 日で起動できなくなります</strong>。続けて使うときは、このページから新しい版を入れ直してください（設定はそのまま残ります）。</li>
+        <li>試験版なので、ほかの人には広めず、このページの URL も渡さないでください。</li>
+      </ul>
+    </section>
+
+    <section id="install">
+      <h2>1. 入れる</h2>
+      <ol>
+        <li>
+          下のボタンからアプリのファイル（APK、約 23MB）をダウンロードします。<br>
+          <a class="download" href="https://github.com/bunpe123/slow-player-guide/releases/latest/download/slow-player.apk">アプリをダウンロード</a>
+        </li>
+        <li>
+          ダウンロードが終わったら、通知か「ファイル」アプリの「ダウンロード」から <code>slow-player.apk</code> を開きます。
+          <figure>
+            <div class="figure-frame"><img src="images/install-file.png" alt="" width="1080" height="2424" onerror="this.hidden = true"></div>
+            <figcaption>ダウンロードにある APK</figcaption>
+          </figure>
+        </li>
+        <li>「この提供元のアプリを許可」などの画面が出たら、オンにして戻ります（ブラウザやファイルアプリに、アプリを入れる許可を出す画面です）。</li>
+        <li>「インストール」を押します。</li>
+        <li>「Play プロテクト」の警告が出ることがあります。ストアを通していないアプリに出るものです。「詳細」→「インストールする」で進めます。</li>
+      </ol>
+      <p>画面の文言や見た目は、スマホのメーカー（Pixel・Galaxy・AQUOS など）で少し違います。分からなければ、このページを教えてくれた人に聞いてください。</p>
+      <p class="note">このアプリはインターネットに接続する権限を持っていません。動画やデータが外に送られることはありません。</p>
+    </section>
+
+    <section id="use">
+      <h2>2. 使い方</h2>
+      <figure>
+        <div class="figure-frame"><img src="images/home.png" alt="" width="1080" height="2424" onerror="this.hidden = true"></div>
+        <figcaption>最初の画面</figcaption>
+      </figure>
+      <p>「動画を選ぶ」を押して、見たい動画を選びます。</p>
+      <figure>
+        <div class="figure-frame"><img src="images/picker.png" alt="" width="720" height="1616" onerror="this.hidden = true"></div>
+        <figcaption>見たい動画を選んで『完了』を押す</figcaption>
+      </figure>
+      <h3 id="controls-title">画面の操作</h3>
+      <figure>
+        <div class="figure-frame"><img src="images/player.png" alt="" width="720" height="1616" onerror="this.hidden = true"></div>
+        <figcaption>再生画面</figcaption>
+      </figure>
+      <table aria-labelledby="controls-title">
+        <colgroup><col><col></colgroup>
+        <thead>
+          <tr><th scope="col">操作</th><th scope="col">動き</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">横にスワイプ（画面の上の方から）</th><td>大きく動く（画面の幅で 20 秒）</td></tr>
+          <tr><th scope="row">横にスワイプ（真ん中から）</th><td>普通に動く（画面の幅で 4 秒）</td></tr>
+          <tr><th scope="row">横にスワイプ（下の方から）</th><td>1 コマずつ動く</td></tr>
+          <tr><th scope="row">縦にスワイプ</th><td>上で速く、下でゆっくり（0.1〜2 倍）。上の速度表示を押すと 1 倍に戻る</td></tr>
+          <tr><th scope="row">「前のコマ」「次のコマ」</th><td>1 コマずつ。押し続けると連続で進む</td></tr>
+          <tr><th scope="row">「A点」「B点」→「ループ」</th><td>A と B の間を繰り返す</td></tr>
+          <tr><th scope="row">左右反転</th><td>映像を反転して表示する（鏡のように見たいとき）</td></tr>
+          <tr><th scope="row">上下反転</th><td>映像を反転して表示する（鏡のように見たいとき）</td></tr>
+          <tr><th scope="row">映像をタップ</th><td>ボタンを隠す・出す</td></tr>
+        </tbody>
+      </table>
+      <p>再生中に横スワイプして指を離すと、そのまま再生に戻ります。</p>
+      <p>動画を開いた直後は「準備中」と出ます。その間は 1 コマずつの操作が使えません（数秒で終わります）。</p>
+    </section>
+
+    <section id="try">
+      <h2>3. 試してほしいこと</h2>
+      <p>自分で撮ったプレー動画（いつも見返している動画）で、普段どおり使ってみてください。</p>
+      <p>特に見てほしいところ</p>
+      <ol>
+        <li>再生中に横スワイプして指を離したあと、すぐ再生に戻るか（引っかかる・止まる感じがないか）</li>
+        <li>音が映像に遅れて戻ってこないか</li>
+        <li>1 コマずつ動かしたとき、飛んだり戻ったりしないか</li>
+        <li>長い動画（10 分以上）、60fps の動画、HDR で撮った動画でも同じように動くか</li>
+        <li>落ちる・固まる・真っ黒になることがないか</li>
+      </ol>
+    </section>
+
+    <section id="feedback">
+      <h2>4. 教えてほしいこと</h2>
+      <p>このページを教えてくれた人に、LINE などで次を送ってください。</p>
+      <ul>
+        <li>スマホの機種名（例: Galaxy S25、AQUOS sense9）と Android のバージョン（設定 →「デバイス情報」）</li>
+        <li>気になったこと（いつ・どの動画で・何をしたら・どうなったか）。よかった点も歓迎です。</li>
+        <li>使った動画の撮り方（どのスマホ・カメラアプリで、何 fps か、HDR かどうか）。分かる範囲で大丈夫です。</li>
+      </ul>
+    </section>
+
+    <section id="logs">
+      <h2>5. 困ったことが起きたら（ログを送る）</h2>
+      <p>アプリの中の記録（ログ）を送ってもらうと、原因を探せます。</p>
+      <ol>
+        <li>不具合が起きたら、アプリを閉じずにボタンを出します（映像をタップ）。</li>
+        <li>
+          一番下の「デバッグ」ボタンを押します。
+          <figure>
+            <div class="figure-frame"><img src="images/debug.png" alt="" width="720" height="1616" onerror="this.hidden = true"></div>
+            <figcaption>デバッグボタン</figcaption>
+          </figure>
+        </li>
+        <li>
+          「ログを送る」を押します。動画を選ぶ前の画面にもあります。
+          <figure>
+            <div class="figure-frame"><img src="images/debug.png" alt="" width="720" height="1616" onerror="this.hidden = true"></div>
+            <figcaption>ログを送るボタン</figcaption>
+          </figure>
+        </li>
+        <li>
+          共有の画面で LINE を選び、送り先を選んで送ります。
+          <figure>
+            <div class="figure-frame"><img src="images/share-sheet.png" alt="" width="1080" height="2424" onerror="this.hidden = true"></div>
+            <figcaption>共有の画面</figcaption>
+          </figure>
+          <ul>
+            <li>文章の要約と、詳しいログのファイル（.txt）が一緒に送られます。片方だけでも大丈夫です。</li>
+            <li>動画のファイル名や保存場所は送られません（伏せてあります）。</li>
+          </ul>
+        </li>
+      </ol>
+      <p>動きがおかしいときは、スマホの「画面録画」で撮った映像があると、とても助かります。</p>
+    </section>
+
+    <section id="storage">
+      <h2>6. 容量について</h2>
+      <ul>
+        <li>アプリ本体は約 24MB（入れたあとの大きさ。Pixel 10a の「アプリ情報」で 24.14MB）。</li>
+        <li>
+          「アプリ情報」を見ると、権限は「リクエストされた権限はありません」、通信は「データ通信の使用はありません」になっています。
+          <figure>
+            <div class="figure-frame"><img src="images/appinfo.png" alt="" width="1080" height="2424" onerror="this.hidden = true"></div>
+            <figcaption>アプリ情報</figcaption>
+          </figure>
+        </li>
+        <li>動画を開くと、なめらかに動かすための作業用ファイルを作ることがあります（3 分の動画で約 400MB、合計で最大 2GB）。</li>
+        <li>消したいときは、「デバッグ」の中の「変換版を全削除」を押すか、スマホの設定 → アプリ → スロー再生 → ストレージ →「ストレージを消去」。</li>
+      </ul>
+    </section>
+
+    <section id="expiry">
+      <h2>7. 期限と更新</h2>
+      <p>期限が過ぎると「この試験版の期限が過ぎました」と出て使えなくなります。</p>
+      <ul>
+        <li>新しい版は、このページの「アプリをダウンロード」から同じ手順で入れます。上書きされ、設定は残ります。</li>
+        <li>期限の日付は「デバッグ」の中に出ています。</li>
+      </ul>
+    </section>
+
+    <section id="uninstall">
+      <h2>8. 消すとき</h2>
+      <p>スマホの設定 → アプリ → スロー再生 →「アンインストール」。作業用ファイルも一緒に消えます。</p>
+    </section>
+  </main>
+</body>
+</html>
