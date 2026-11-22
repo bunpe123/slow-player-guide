@@ -132,7 +132,9 @@
       background: var(--inset);
     }
 
-    .figure-frame img {
+    .figure-frame-video { aspect-ratio: 1080 / 2050; }
+
+    .figure-frame img, .figure-frame video {
       position: absolute;
       inset: 0;
       inline-size: 100%;
@@ -207,6 +209,14 @@
 
     <section id="install">
       <h2>1. 入れる</h2>
+      <figure>
+        <div class="figure-frame figure-frame-video">
+          <video controls playsinline preload="none" poster="media/slow-player-intro.jpg" width="1080" height="2050">
+            <source src="media/slow-player-intro.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption>どんなアプリか（30 秒・音が出ます）</figcaption>
+      </figure>
       <ol>
         <li>
           下のボタンからアプリのファイル（APK、約 24MB）をダウンロードします。<br>
