@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>スロー再生（試験版）</title>
+  <meta name="description" content="音ゲーなどのプレー動画を、ゆっくり・1 コマずつ見返せる Android アプリ（試験版）の入れ方と使い方。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="スロー再生（試験版）">
+  <meta property="og:description" content="プレー動画を、ゆっくり・1 コマずつ見返せる Android アプリ（試験版）。入れ方と使い方。">
+  <meta property="og:url" content="https://bunpe123.github.io/slow-player-guide/">
+  <meta property="og:image" content="https://bunpe123.github.io/slow-player-guide/images/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="スロー再生（試験版）。丸が判定線に近づく 5 コマと、0.25 倍速の表示">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
   <style>
     :root {
       color-scheme: light dark;
@@ -181,6 +192,7 @@
   <main>
     <header>
       <h1>スロー再生（試験版）の入れ方と使い方</h1>
+      <p>音ゲーなどのプレー動画を、ゆっくり・1 コマずつ見返せる Android アプリ（試験版）です。</p>
       <a class="download" href="https://github.com/bunpe123/slow-player-guide/releases/latest/download/slow-player.apk">アプリをダウンロード</a>
     </header>
 
@@ -202,7 +214,6 @@
     <section id="intro">
       <h2>はじめに</h2>
       <ul>
-        <li>音ゲーなどのプレー動画を、1 コマずつ・ゆっくり見返すための Android アプリです。今は試験版です。</li>
         <li>Android 7.0 以降のスマホで使えます。iPhone 版はまだありません。</li>
       </ul>
     </section>
@@ -221,6 +232,7 @@
         <li>
           下のボタンからアプリのファイル（APK、約 24MB）をダウンロードします。<br>
           <a class="download" href="https://github.com/bunpe123/slow-player-guide/releases/latest/download/slow-player.apk">アプリをダウンロード</a>
+          <p>アプリのファイルは人に回さず、このページの URL を教えてください（いつも新しい版が入り、偽物が混ざるのを防げます）。</p>
         </li>
         <li>
           ダウンロードが終わったら、通知か「ファイル」アプリの「ダウンロード」から <code>slow-player.apk</code> を開きます。
@@ -261,7 +273,7 @@
           <tr><th scope="row">横にスワイプ（画面の上の方から）</th><td>大きく動く（画面の幅で 20 秒）</td></tr>
           <tr><th scope="row">横にスワイプ（真ん中から）</th><td>普通に動く（画面の幅で 4 秒）</td></tr>
           <tr><th scope="row">横にスワイプ（下の方から）</th><td>1 コマずつ動く</td></tr>
-          <tr><th scope="row">縦にスワイプ</th><td>上で速く、下でゆっくり（0.1〜2 倍）。上の速度表示を押すと 1 倍に戻る</td></tr>
+          <tr><th scope="row">縦にスワイプ</th><td>上で速く、下でゆっくり（0.1〜2 倍）。1 倍から上の速度表示を押すたびに 0.5 → 0.25 → 0.1 → 1 倍と切り替わる</td></tr>
           <tr><th scope="row">「前のコマ」「次のコマ」</th><td>1 コマずつ。押し続けると連続で進む</td></tr>
           <tr><th scope="row">「A点」「B点」→「ループ」</th><td>A と B の間を繰り返す</td></tr>
           <tr><th scope="row">左右反転</th><td>映像を反転して表示する（鏡のように見たいとき）</td></tr>
@@ -324,7 +336,9 @@
     <section id="update">
       <h2>7. 新しい版にするとき</h2>
       <ul>
+        <li>今の版: 2026-11-23（v20261123b）</li>
         <li>このページの「アプリをダウンロード」から同じ手順で入れます。上書きされ、設定は残ります。</li>
+        <li>アプリのファイルの SHA-256（ダウンロードしたファイルが本物か確かめたい人向け。分からなければ気にしなくて大丈夫です）: <code>9f22308d5035e116154a4b353fcefe296a9433197e055de5bd115aa2fd25e40a</code></li>
         <li>2026-11-23 の版で変わったこと: 再生のしくみを自作のものに替えました。再生中にスワイプして指を離したあと、前より早く再生に戻ります。A-B ループのつなぎ目や、速さを変えたときの切り替えもなめらかになりました。HDR で撮った動画や 240fps の動画は、今までどおりのしくみで再生します。</li>
       </ul>
     </section>
